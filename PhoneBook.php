@@ -4,10 +4,6 @@
 
 require('arrayfunctions.php'); // File that contains some of the functions used in this Main
 
-// Ideas for future me: 
-// 1 . Modify this so the program auto runs openPhoneBook everytime it starts so the user dont have to do it by themselves
-// 2 . Modify this so the program auto runs savePhoneBooks so the user dont have to do it by themselves
-
 $names = [];
 $phoneNumbers = [];
 
@@ -42,9 +38,10 @@ function openPhoneBook($names, $phoneNumbers){
 }
 
 function createContacts($names, $phoneNumbers){
+    echo(PHP_EOL);
     $name = readline("Name: ");
     $names[] = $name;
-    $phoneNumber = readline("Phone numbers: ");
+    $phoneNumber = readline("Phone number: ");
     $phoneNumbers[] = $phoneNumber;
     
     $return =  [$names, $phoneNumbers];
@@ -52,6 +49,7 @@ function createContacts($names, $phoneNumbers){
 }
 
 function listContacts($names, $phoneNumbers){  
+    echo(PHP_EOL);
     var_dump($names);
     echo(PHP_EOL);
     for($i=0;$i<array_Lenght($names);$i++){
@@ -87,6 +85,7 @@ function savePhoneBook($names, $phoneNumbers){
 }
     
 function removeContacts($names, $phoneNumbers){
+    echo(PHP_EOL);
     for($i=0;$i<array_Lenght($names);$i++){
         $count=$i+1;
         echo("Contact " . $count . ": " . $names[$i]);
@@ -103,50 +102,69 @@ function removeContacts($names, $phoneNumbers){
     return $return;
 }
 
+function updateContact($names, $phoneNumbers){
+    echo(PHP_EOL);
+    for($i=0;$i<array_Lenght($names);$i++){
+        $count=$i+1;
+        echo("Contact id: " . $count . PHP_EOL);
+        echo("Name: " . $names[$i] . PHP_EOL);
+        echo("Phone numer: $phoneNumbers[$i]" . PHP_EOL);
+        
+        echo("\n-----------------\n");
+        echo(PHP_EOL);
+    }
+    $id = ((int)readline("Contact id: "));
+    $id = $id-1;
+
+    $names[$id] = readline("New name: ");
+    $phoneNumbers[$id] = readline("New phone number: ");
+    
+    $return =  [$names, $phoneNumbers];
+    return $return;
+}
 // main
 
 $op = -1;
 while ($op != 0){
-    
-    echo("Choose an option: \n");
-    echo(" 1 - Open Phone Book \n");
-    echo(" 2 - Create Contact \n");
-    echo(" 3 - List Contacts \n");
-    echo(" 4 - Update Contacts \n");
-    echo(" 5 - Remove Contact \n");
-    echo(" 6 - Save Phone Book \n");
-    echo(" 0 - Exit \n");
-    $op = (int)readline("Option: ");
+    echo(PHP_EOL);
 
+    $return = openPhoneBook($names, $phoneNumbers);
+    $names = $return[0];
+    $phoneNumbers = $return[1];
+    
+    //echo("Choose an option: \n");
+    echo(" MENU   ". PHP_EOL);
+    echo(" 1 - Create Contact \n");
+    echo(" 2 - List Contacts \n");
+    echo(" 3 - Update Contact \n");
+    echo(" 4 - Remove Contact \n");
+    echo(" 0 - Exit \n");
+    $op = (int)readline("Option: "); 
+    
     switch($op){
         case 0:
             break;
         case 1:
-            $return = openPhoneBook($names, $phoneNumbers);
-            $names = $return[0];
-            $phoneNumbers = $return[1];
-            break;
-        case 2:
             $return = createContacts($names, $phoneNumbers);
             $names = $return[0];
             $phoneNumbers = $return[1];
+            savePhoneBook($names, $phoneNumbers);
             break;
-        case 3:
+        case 2:
             listContacts($names, $phoneNumbers);
             break;
-        case 4:
-            updateContacts();
+        case 3:
+            $return = updateContact($names, $phoneNumbers);
+            $names = $return[0];
+            $phoneNumbers = $return[1];
+            savePhoneBook($names, $phoneNumbers);
             break;
-        case 5:
+        case 4:
             $return = removeContacts($names, $phoneNumbers);
             $names = $return[0];
             $phoneNumbers = $return[1];
-            
-            break;
-        case 6:
             savePhoneBook($names, $phoneNumbers);
             break;
     }
     
 }
-
