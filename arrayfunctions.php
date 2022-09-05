@@ -1,6 +1,8 @@
 <?php
 
 // this php file can be found at: 
+// replit: https://replit.com/@fantoni011/my-php-tool-box#arrayfunctions.php or 
+// git: https://github.com/fantonialice/my-php-toolbox/blob/main/arrayfunctions.php
 
 // array_lenght: receives an array as an argument and returns its lenght 
 
